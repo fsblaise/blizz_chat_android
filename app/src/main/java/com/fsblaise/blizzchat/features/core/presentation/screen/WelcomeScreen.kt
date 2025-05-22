@@ -17,12 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.fsblaise.blizzchat.features.auth.presentation.screen.Login
+import com.fsblaise.blizzchat.navigation.SignIn
 import com.fsblaise.blizzchat.theme.BlizzChatTheme
-import kotlinx.serialization.Serializable
-
-@Serializable
-object Welcome
 
 @Composable
 fun WelcomeScreen(navController: NavController) {
@@ -40,7 +36,7 @@ fun WelcomeScreen(navController: NavController) {
             )
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = {
-                navController.navigate(Login)
+                navController.navigate(SignIn)
             }) {
                 Text(text = "Start")
             }

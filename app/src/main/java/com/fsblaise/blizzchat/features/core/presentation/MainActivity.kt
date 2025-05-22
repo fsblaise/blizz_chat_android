@@ -7,15 +7,17 @@ import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.fsblaise.blizzchat.features.auth.presentation.screen.SignIn
-import com.fsblaise.blizzchat.features.auth.presentation.screen.SignInScreen
-import com.fsblaise.blizzchat.features.auth.presentation.screen.SignUp
-import com.fsblaise.blizzchat.features.auth.presentation.screen.SignUpScreen
-import com.fsblaise.blizzchat.features.core.presentation.screen.Home
-import com.fsblaise.blizzchat.features.core.presentation.screen.HomeScreen
-import com.fsblaise.blizzchat.features.core.presentation.screen.Welcome
-import com.fsblaise.blizzchat.features.core.presentation.screen.WelcomeScreen
+import com.fsblaise.blizzchat.features.stories.domain.model.Story
+import com.fsblaise.blizzchat.features.stories.domain.utils.StoryNavType
+import com.fsblaise.blizzchat.navigation.Auth
+import com.fsblaise.blizzchat.navigation.Camera
+import com.fsblaise.blizzchat.navigation.DisplayPicture
+import com.fsblaise.blizzchat.navigation.Messaging
+import com.fsblaise.blizzchat.navigation.ViewStory
+import com.fsblaise.blizzchat.navigation.authNavGraph
+import com.fsblaise.blizzchat.navigation.homeNavGraph
 import com.fsblaise.blizzchat.theme.BlizzChatTheme
+import kotlin.reflect.typeOf
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,19 +26,24 @@ class MainActivity : ComponentActivity() {
         setContent {
             BlizzChatTheme {
                 val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = Welcome) {
-                    composable<Welcome> {
-                        WelcomeScreen(navController = navController)
+                NavHost(navController = navController, startDestination = Auth) {
+                    authNavGraph(navController = navController)
+                    homeNavGraph(navController = navController)
+                    composable<Messaging> {
+                        // add messaging screen here
                     }
-                    // Add the rest of the screens here
-                    composable<SignIn> {
-                        SignInScreen(navController = navController)
+                    composable<Camera> {
+                        // add camera screen here
                     }
-                    composable<SignUp> {
-                        SignUpScreen(navController = navController)
+                    composable<DisplayPicture> {
+                        // add display picture screen here
                     }
-                    composable<Home> {
-                        HomeScreen(navController = navController)
+                    composable<ViewStory>(
+                        typeMap = mapOf(
+                            typeOf<Story>() to StoryNavType,
+                        )
+                    ) {
+                        // add story screen here
                     }
                 }
             }

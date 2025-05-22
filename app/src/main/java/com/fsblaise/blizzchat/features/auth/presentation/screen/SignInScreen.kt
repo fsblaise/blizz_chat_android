@@ -17,11 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.fsblaise.blizzchat.navigation.SignUp
 import com.fsblaise.blizzchat.theme.BlizzChatTheme
-import kotlinx.serialization.Serializable
-
-@Serializable
-object SignIn
 
 @Composable
 fun SignInScreen(navController: NavController) {

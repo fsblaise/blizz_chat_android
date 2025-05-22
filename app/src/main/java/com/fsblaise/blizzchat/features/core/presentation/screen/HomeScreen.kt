@@ -14,10 +14,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.fsblaise.blizzchat.theme.BlizzChatTheme
-import kotlinx.serialization.Serializable
-
-@Serializable
-object Home
 
 @Composable
 fun HomeScreen(navController: NavController) {
