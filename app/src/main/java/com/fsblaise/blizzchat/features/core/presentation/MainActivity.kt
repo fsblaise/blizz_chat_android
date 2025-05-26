@@ -17,8 +17,10 @@ import com.fsblaise.blizzchat.navigation.ViewStory
 import com.fsblaise.blizzchat.navigation.authNavGraph
 import com.fsblaise.blizzchat.navigation.homeNavGraph
 import com.fsblaise.blizzchat.theme.BlizzChatTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.reflect.typeOf
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
