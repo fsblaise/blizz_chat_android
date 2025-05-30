@@ -36,6 +36,7 @@ import androidx.navigation.compose.rememberNavController
 import com.fsblaise.blizzchat.features.auth.presentation.components.PageIndicator
 import com.fsblaise.blizzchat.features.auth.presentation.components.SignUpAuth
 import com.fsblaise.blizzchat.features.auth.presentation.components.SignUpName
+import com.fsblaise.blizzchat.features.auth.presentation.state.AuthViewModel
 import com.fsblaise.blizzchat.features.auth.presentation.state.SignUpFormViewModel
 import com.fsblaise.blizzchat.navigation.Auth
 import com.fsblaise.blizzchat.navigation.Home
@@ -44,9 +45,10 @@ import com.fsblaise.blizzchat.theme.BlizzChatTheme
 @Composable
 fun SignUpScreen(
     navController: NavController,
-    viewModel: SignUpFormViewModel = hiltViewModel(),
+    formViewModel: SignUpFormViewModel = hiltViewModel(),
+    authViewModel: AuthViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.value
+    val formState = formViewModel.state.value
     val scope = rememberCoroutineScope()
     var currentStep by remember { mutableIntStateOf(0) }
 
@@ -59,7 +61,7 @@ fun SignUpScreen(
     }
 
     fun signUp() {
-        // TODO: authViewModel.signUp
+        authViewModel.signIn(formState.email, formState.password)
         // Handle sign-up logic here, e.g., validate inputs and navigate to home screen.
         // This is a placeholder for the actual sign-up logic.
         navController.navigate(Home) {
@@ -107,13 +109,13 @@ fun SignUpScreen(
                     when (step) {
                         0 -> SignUpAuth(
                             navController = navController,
-                            viewModel = viewModel,
-                            state = state,
+                            viewModel = formViewModel,
+                            state = formState,
                             onClick = { switchSteps() },
                         )
                         1 -> SignUpName(
-                            viewModel = viewModel,
-                            state = state,
+                            viewModel = formViewModel,
+                            state = formState,
                             onClick = { signUp() },
                         )
                     }

@@ -11,6 +11,10 @@ android {
     namespace = "com.fsblaise.blizzchat"
     compileSdk = 35
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         applicationId = "com.fsblaise.blizzchat"
         minSdk = 24
@@ -49,6 +53,22 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+
+    flavorDimensions += "environment"
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+            // Custom vars
+            buildConfigField("String", "API_URL", "\"http://localhost:3000/\"")
+        }
+        create("prod") {
+            dimension = "environment"
+            // Custom vars
+            buildConfigField("String", "API_URL", "\"https://blizz-chat-backend-0aaba721d2ed.herokuapp.com/\"")
         }
     }
 }

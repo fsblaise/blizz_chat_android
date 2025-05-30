@@ -1,5 +1,6 @@
 package com.fsblaise.blizzchat.features.core.data.remote
 
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -8,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitBuilder {
     private const val BASE_URL = "https://api.example.com/"
 
-    private fun getOkHttpClient(): OkHttpClient {
+    private fun getOkHttpClient(interceptor: Interceptor): OkHttpClient {
         val logging = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
@@ -20,12 +21,12 @@ object RetrofitBuilder {
             .build()
     }
 
-    fun<T> createRetrofit(baseUrl: String? = null, endpoint: String, serviceClass: Class<T>): T {
+    fun<T> createRetrofit(baseUrl: String? = null, endpoint: String, serviceClass: Class<T>, interceptor: Interceptor): T {
         val finalBaseUrl = (baseUrl ?: BASE_URL).trimEnd('/') + endpoint
 
         return Retrofit.Builder()
             .baseUrl(finalBaseUrl)
-            .client(getOkHttpClient())
+            .client(getOkHttpClient(interceptor))
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(serviceClass)

@@ -4,9 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.fsblaise.blizzchat.features.auth.presentation.state.AuthViewModel
 import com.fsblaise.blizzchat.features.stories.domain.model.Story
 import com.fsblaise.blizzchat.features.stories.domain.utils.StoryNavType
 import com.fsblaise.blizzchat.navigation.Auth
@@ -28,6 +32,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             BlizzChatTheme {
                 val navController = rememberNavController()
+                val authViewModel: AuthViewModel = hiltViewModel()
+                val authState by authViewModel.state.collectAsState()
+
+                println("state is: $authState")
                 NavHost(navController = navController, startDestination = Auth) {
                     authNavGraph(navController = navController)
                     homeNavGraph(navController = navController)

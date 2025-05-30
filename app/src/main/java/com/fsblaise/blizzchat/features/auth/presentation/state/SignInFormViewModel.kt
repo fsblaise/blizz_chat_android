@@ -49,8 +49,14 @@ class SignInFormViewModel @Inject constructor() : ViewModel() {
     private fun validateForm() {
         val emailError = _state.value.emailError
         val passwordError = _state.value.passwordError
+        val email = _state.value.email
+        val password = _state.value.password
+
         _state.value = _state.value.copy(
-            isValid = emailError == null && passwordError == null
+            isValid = emailError == null
+                    && passwordError == null
+                    && email.isNotBlank()
+                    && password.isNotBlank()
         )
     }
 }
