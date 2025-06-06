@@ -6,6 +6,8 @@ import com.fsblaise.blizzchat.features.auth.domain.model.UserProfile
 interface AuthRepository {
     suspend fun signIn(email: String, password: String): AuthResponseDto
     suspend fun signUp(email: String, password: String, fullName: String): AuthResponseDto
-    suspend fun signOut(): Boolean
-    suspend fun getLoggedInUser(): AuthResponseDto
+    fun getToken(): String?
+    fun removeActiveSession()
+    fun signOut(): Boolean
+    suspend fun getLoggedInUser(): UserProfile
 }

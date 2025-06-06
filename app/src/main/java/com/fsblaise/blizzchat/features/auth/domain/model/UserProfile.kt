@@ -3,7 +3,9 @@ package com.fsblaise.blizzchat.features.auth.domain.model
 import com.fsblaise.blizzchat.features.settings.domain.model.Preference
 import com.fsblaise.blizzchat.features.settings.domain.model.SecuritySettings
 import com.fsblaise.blizzchat.features.users.domain.model.Contact
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class UserProfile(
     val fullName: String,
     val email: String,

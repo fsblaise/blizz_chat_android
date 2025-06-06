@@ -13,10 +13,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.fsblaise.blizzchat.features.auth.presentation.state.AuthViewModel
 import com.fsblaise.blizzchat.theme.BlizzChatTheme
 
 @Composable
-fun SettingsScreen(navController: NavController) {
+fun SettingsScreen(
+    navController: NavController,
+    authViewModel: AuthViewModel,
+) {
+    SettingsScreen(
+        navController = navController
+    )
+}
+
+@Composable
+fun SettingsScreen(
+    navController: NavController,
+) {
     Scaffold(content = { padding ->
         Column(
             modifier = Modifier

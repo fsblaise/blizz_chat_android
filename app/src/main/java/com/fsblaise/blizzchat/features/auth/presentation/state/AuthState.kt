@@ -7,5 +7,6 @@ sealed interface AuthState {
     data object Fetching : AuthState
     data object Unauthenticated : AuthState
     data class Authenticated(val userSession: UserSession) : AuthState
+    data object HelloSuccess : AuthState
     data class Error(val message: String) : AuthState
 }

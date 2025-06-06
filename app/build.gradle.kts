@@ -63,8 +63,10 @@ android {
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
             // Custom vars
-            buildConfigField("String", "API_URL", "\"http://localhost:3000/\"")
+//            buildConfigField("String", "API_URL", "\"https://blizz-chat-backend-0aaba721d2ed.herokuapp.com/\"")
+            buildConfigField("String", "API_URL", "\"http://192.168.9.142:3000/\"")
         }
+        // valamiert itt timeoutol az api
         create("prod") {
             dimension = "environment"
             // Custom vars

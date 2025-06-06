@@ -1,23 +1,31 @@
 package com.fsblaise.blizzchat.features.core.data.remote
 
+import com.fsblaise.blizzchat.BuildConfig
+import com.fsblaise.blizzchat.features.core.data.utils.ResponseInterceptor
+import com.fsblaise.blizzchat.features.core.data.utils.TimeoutInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
+import kotlin.time.Duration
 
 object RetrofitBuilder {
-    private const val BASE_URL = "https://api.example.com/"
+    private const val BASE_URL = BuildConfig.API_URL
 
     private fun getOkHttpClient(interceptor: Interceptor): OkHttpClient {
         val logging = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
+//            level = HttpLoggingInterceptor.Level.HEADERS
         }
 
         return OkHttpClient.Builder()
             .addInterceptor(logging)
-            // Here we can add more interceptors if needed
-            // TODO: Token interceptor
+            .callTimeout(10, TimeUnit.SECONDS)
+            .addInterceptor(interceptor)
+            .addInterceptor(TimeoutInterceptor())
+//            .addInterceptor(ResponseInterceptor())
             .build()
     }
 

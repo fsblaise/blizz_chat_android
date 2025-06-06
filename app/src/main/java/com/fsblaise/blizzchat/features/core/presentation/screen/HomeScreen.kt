@@ -1,34 +1,51 @@
 package com.fsblaise.blizzchat.features.core.presentation.screen
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChatBubble
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.outlined.ChatBubble
 import androidx.compose.material.icons.outlined.ChatBubbleOutline
-import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.fsblaise.blizzchat.features.settings.presentation.screen.SettingsScreen
 import com.fsblaise.blizzchat.navigation.Chats
+import com.fsblaise.blizzchat.navigation.ProfileDialog
 import com.fsblaise.blizzchat.navigation.Settings
 import com.fsblaise.blizzchat.navigation.Stories
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavController, content: @Composable (modifier: Modifier) -> Unit) {
+fun HomeScreen(
+    navController: NavController,
+    content: @Composable (modifier: Modifier) -> Unit,
+) {
 
     val tabs = remember {
         listOf(
@@ -53,14 +70,56 @@ fun HomeScreen(navController: NavController, content: @Composable (modifier: Mod
         )
     }
 
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+    val routeName = currentDestination?.route?.substringAfterLast('.') ?: "Placeholder"
+    val colorScheme = colorScheme
+
     Scaffold(
         content = { padding ->
             content(Modifier.padding(padding))
         },
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        modifier = Modifier.padding(start = 24.dp),
+                        fontSize = 24.sp,
+                        text = routeName
+                    )
+                },
+                navigationIcon = {
+                    // TODO: profile selector dialog
+                    Box(
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .background(
+                                color = colorScheme.primaryContainer,
+                                shape = CircleShape
+                            ).padding(4.dp)
+                            .clickable(onClick = {
+                                navController.navigate(ProfileDialog)
+                            })
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Person,
+                            contentDescription = null
+                        )
+                    }
+                },
+                actions = {
+                    IconButton(onClick = {
+                        navController.navigate(Settings)
+                    }) {
+                        Icon(
+                            imageVector = Icons.Filled.MoreVert,
+                            contentDescription = "Settings",
+                        )
+                    }
+                }
+            )
+        },
         bottomBar = {
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
-            val currentDestination = navBackStackEntry?.destination
-
             NavigationBar {
                 tabs.forEach { tab ->
                     val isSelected = currentDestination?.hierarchy?.any {
@@ -99,4 +158,16 @@ fun HomeScreen(navController: NavController, content: @Composable (modifier: Mod
             }
         }
     )
+}
+
+@Preview
+@Composable
+fun HomeScreenPreview() {
+    val mockNavController = rememberNavController()
+
+    HomeScreen(
+        navController = mockNavController,
+    ) {
+        SettingsScreen(mockNavController)
+    }
 }

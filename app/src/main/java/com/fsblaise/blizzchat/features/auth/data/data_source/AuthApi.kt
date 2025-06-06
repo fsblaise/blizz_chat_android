@@ -10,8 +10,8 @@ import retrofit2.http.PATCH
 import retrofit2.http.POST
 
 interface AuthApi {
-    @GET()
-    suspend fun fetchUserByToken(): AuthResponseDto
+    @GET(".")
+    suspend fun fetchUserByToken(): UserProfile
 
     @POST("signIn")
     suspend fun signIn(@Body body: SignInDto): AuthResponseDto
@@ -19,6 +19,6 @@ interface AuthApi {
     @POST("signUp")
     suspend fun signUp(@Body body: SignUpDto): AuthResponseDto
 
-    @PATCH()
+    @PATCH(".")
     suspend fun update(@Body body: UserProfile): UserProfile
 }

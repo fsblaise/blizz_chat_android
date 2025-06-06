@@ -13,15 +13,15 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object UsersModule {
 
-    @Provides
-    @Singleton
-    fun provideUsersApi(
-        tokenInterceptor: TokenInterceptor
-    ): UsersApi {
-        return RetrofitBuilder.createRetrofit(
-            endpoint = "/users/",
-            serviceClass = UsersApi::class.java,
-            interceptor = tokenInterceptor // Assuming no interceptor is needed for UsersApi
-        )
-    }
+//    @Provides
+//    @Singleton
+//    fun provideUsersApi(
+//        tokenInterceptor: TokenInterceptor
+//    ): UsersApi {
+//        return RetrofitBuilder.createRetrofit(
+//            endpoint = "/users/",
+//            serviceClass = UsersApi::class.java,
+//            interceptor = tokenInterceptor // Assuming no interceptor is needed for UsersApi
+//        )
+//    }
 }

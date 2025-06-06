@@ -19,12 +19,12 @@ object AuthModule {
     @Provides
     @Singleton
     fun provideAuthApi(
-        tokenInterceptor: TokenInterceptor
+        interceptor: TokenInterceptor
     ): AuthApi {
         return RetrofitBuilder.createRetrofit(
-            endpoint = "/auth/",
+            endpoint = "/users/",
             serviceClass = AuthApi::class.java,
-            interceptor = tokenInterceptor
+            interceptor = interceptor
         )
     }
 

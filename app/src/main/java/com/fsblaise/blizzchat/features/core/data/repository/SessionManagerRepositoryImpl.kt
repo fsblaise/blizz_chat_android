@@ -15,7 +15,7 @@ class SessionManagerRepositoryImpl @Inject constructor(
     private val sessionsKey = "userSessions"
     private val currentSessionKey = "currentSession"
 
-    override suspend fun saveSession(
+    override fun saveSession(
         email: String, apiUrl: String?, companyName: String?
     ) {
         val sessions = getSessions()?.toMutableList() ?: mutableListOf()
@@ -38,14 +38,14 @@ class SessionManagerRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getSessions(): List<UserPrefsSession>? {
+    override fun getSessions(): List<UserPrefsSession>? {
         val sessionsJson = prefs.getString(sessionsKey, null)
         return sessionsJson?.let {
             Json.decodeFromString<List<UserPrefsSession>>(it)
         }
     }
 
-    override suspend fun updateSession(
+    override fun updateSession(
         email: String, apiUrl: String, updatedSession: UserPrefsSession
     ) {
         val sessions = getSessions()?.toMutableList() ?: mutableListOf()
@@ -61,7 +61,7 @@ class SessionManagerRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun handleAuth(
+    override fun handleAuth(
         token: String, user: UserProfile
     ) {
         val currentSession = getActiveSession()
@@ -92,7 +92,7 @@ class SessionManagerRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun setActiveSession(email: String, apiUrl: String?) {
+    override fun setActiveSession(email: String, apiUrl: String?) {
         var apiUrl = apiUrl ?: BuildConfig.API_URL
         val sessions = getSessions()?.toMutableList() ?: mutableListOf()
         var activeSession: UserPrefsSession? = null
@@ -116,7 +116,7 @@ class SessionManagerRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun removeActiveSession() {
+    override fun removeActiveSession() {
         val currentSession = getActiveSession()
         currentSession?.let {
             prefs.edit {
@@ -145,7 +145,7 @@ class SessionManagerRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun signOut() {
+    override fun signOut() {
         val currentSession = getActiveSession()
         currentSession?.let {
             prefs.edit {
@@ -163,7 +163,7 @@ class SessionManagerRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun signOutOtherSession(sessionToSignOut: UserPrefsSession) {
+    override fun signOutOtherSession(sessionToSignOut: UserPrefsSession) {
         val sessions = getSessions()?.toMutableList() ?: mutableListOf()
         val updatedSessions = sessions.filter { session ->
             session.email != sessionToSignOut.email || session.apiUrl != sessionToSignOut.apiUrl
@@ -174,7 +174,7 @@ class SessionManagerRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun signOutAll() {
+    override fun signOutAll() {
 //        val sessions = getSessions()?.toMutableList() ?: mutableListOf()
         prefs.edit {
             putString(sessionsKey, Json.encodeToString(emptyList<UserPrefsSession>()))

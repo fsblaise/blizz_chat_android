@@ -13,6 +13,9 @@ object Auth
 object Welcome
 
 @Serializable
+object CheckEmail
+
+@Serializable
 object SignIn
 
 @Serializable
@@ -32,6 +35,12 @@ object Settings
 
 @Serializable
 object Stories
+
+@Serializable
+object ProfileDialog
+
+@Serializable
+object Profile
 
 // Normal routes outside the navbar
 

@@ -4,39 +4,39 @@ import com.fsblaise.blizzchat.features.auth.domain.model.UserProfile
 import com.fsblaise.blizzchat.features.core.domain.model.UserPrefsSession
 
 interface SessionManagerRepository {
-    suspend fun saveSession(
+    fun saveSession(
         email: String,
         apiUrl: String? = null,
         companyName: String? = null
     )
 
-    suspend fun getSessions(): List<UserPrefsSession>?
+    fun getSessions(): List<UserPrefsSession>?
 
-    suspend fun updateSession(
+    fun updateSession(
         email: String,
         apiUrl: String,
         updatedSession: UserPrefsSession
     )
 
-    suspend fun handleAuth(
+    fun handleAuth(
         token: String,
         user: UserProfile
     )
 
-    suspend fun setActiveSession(
+    fun setActiveSession(
         email: String,
         apiUrl: String? = null,
     )
 
-    suspend fun removeActiveSession()
+    fun removeActiveSession()
 
     fun getActiveSession(): UserPrefsSession?
 
-    suspend fun signOut()
+    fun signOut()
 
-    suspend fun signOutOtherSession(
+    fun signOutOtherSession(
         sessionToSignOut: UserPrefsSession
     )
 
-    suspend fun signOutAll()
+    fun signOutAll()
 }

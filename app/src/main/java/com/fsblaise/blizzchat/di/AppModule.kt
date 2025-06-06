@@ -12,6 +12,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+// Only provide common services here (No repositories or apis)
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
@@ -20,14 +21,6 @@ object AppModule {
     @Singleton
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
         return context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-    }
-
-    @Provides
-    @Singleton
-    fun provideSessionManagerRepository(
-        sharedPreferences: SharedPreferences
-    ): SessionManagerRepository {
-        return SessionManagerRepositoryImpl(sharedPreferences)
     }
 
     @Provides
